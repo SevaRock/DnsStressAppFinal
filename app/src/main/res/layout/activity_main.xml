@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.klishinpavel.dnsstressapp.MainActivity">
+
+    <Button
+        android:id="@+id/buttonStart"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Start Dns Stress"
+        app:layout_constraintBottom_toTopOf="@+id/ping_scroll_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ScrollView
+        android:id="@+id/ping_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="233dp"
+        android:layout_marginTop="70dp"
+        android:paddingBottom="16dp"
+        android:paddingEnd="16dp"
+        android:paddingLeft="16dp"
+        android:paddingStart="16dp"
+        android:paddingTop="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/buttonStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/resultTextView"
+            android:layout_width="368dp"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:typeface="monospace" />
+
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>
