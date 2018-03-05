@@ -16,8 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -30,7 +28,7 @@ import java.util.logging.Logger;
 public class MainActivity extends AppCompatActivity {
     protected static final Logger L = Logger.getLogger("dns_tests");
     StringBuilder log = new StringBuilder();
-
+    BackgroundDnsSpamProcess dnsSpamProcess = new BackgroundDnsSpamProcess();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,39 +38,21 @@ public class MainActivity extends AppCompatActivity {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-        try {
-            Process process = Runtime.getRuntime().exec("logcat -d");
-            BufferedReader bufferedReader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream()));
-
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                if (line.contains("wifi")) {
-                    log.append(line.substring(line.indexOf(": ") + 2)).append("\n");
-                }
-                this.log.append(log.toString().replace(this.log.toString(), ""));
-                TextView resultTextView = findViewById(R.id.resultTextView);
-                resultTextView.setText(this.log.toString());
-            }
-        } catch (IOException e) {
-            Log.e("wifiDirectHandler", "Failure reading logcat");
-        }
 
         Button buttonStartDnsSpoofing = findViewById(R.id.buttonStart);
+        Button buttonStopDnsSpoofing = findViewById(R.id.buttonStop);
 
         buttonStartDnsSpoofing.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
-                while (true) {
-                    try {
-                        startRandomDnsSpoofing();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    dnsSpamProcess.start();
                 }
+        });
+
+        buttonStopDnsSpoofing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dnsSpamProcess.stop();
             }
         });
     }
@@ -101,4 +81,39 @@ public class MainActivity extends AppCompatActivity {
             L.info("unknown host: " + hostname);
         }
     }
+
+    public class BackgroundDnsSpamProcess implements Runnable {
+
+        Thread backgroungThread;
+
+        public void start() {
+            if (backgroungThread == null) {
+                backgroungThread = new Thread(this);
+                backgroungThread.start();
+            }
+        }
+
+        public void stop() {
+            if (backgroungThread != null) {
+                backgroungThread.interrupt();
+            }
+        }
+
+        @Override
+        public void run() {
+            try {
+                Log.e("DNS", "Dns Spam Started");
+                while (!backgroungThread.isInterrupted()) {
+                    startRandomDnsSpoofing();
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                backgroungThread = null;
+            }
+        }
+    }
 }
+
