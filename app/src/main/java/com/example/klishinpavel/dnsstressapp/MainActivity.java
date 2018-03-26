@@ -11,6 +11,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -23,12 +24,16 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 public class MainActivity extends AppCompatActivity {
     protected static final Logger L = Logger.getLogger("dns_tests");
     StringBuilder log = new StringBuilder();
     BackgroundDnsSpamProcess dnsSpamProcess = new BackgroundDnsSpamProcess();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button buttonStartDnsSpoofing = findViewById(R.id.buttonStart);
         Button buttonStopDnsSpoofing = findViewById(R.id.buttonStop);
+
 
         buttonStartDnsSpoofing.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,16 +91,19 @@ public class MainActivity extends AppCompatActivity {
     public class BackgroundDnsSpamProcess implements Runnable {
 
         Thread backgroungThread;
+        TextView statusMessage = findViewById(R.id.timer);
 
         public void start() {
             if (backgroungThread == null) {
                 backgroungThread = new Thread(this);
+                statusMessage.setText("Dns Resolving Started...");
                 backgroungThread.start();
             }
         }
 
         public void stop() {
             if (backgroungThread != null) {
+                statusMessage.setText("Dns Resolving Stopped...");
                 backgroungThread.interrupt();
             }
         }
