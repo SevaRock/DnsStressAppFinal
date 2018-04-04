@@ -1,31 +1,20 @@
 package com.example.klishinpavel.dnsstressapp;
 
-import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.os.StrictMode;
-import android.provider.SyncStateContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
+import android.text.Editable;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
+import android.widget.EditText;
 import android.widget.TextView;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 public class MainActivity extends AppCompatActivity {
@@ -63,9 +52,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public long getTimeOut() {
+        EditText timeoutField = findViewById(R.id.timeoutField);
+        int time = Integer.parseInt(timeoutField.getText().toString());
+        return time;
+    }
+
     public void startRandomDnsSpoofing() throws IOException, InterruptedException {
         isResolvable(randomDnsSpoofingAddress());
-        TimeUnit.SECONDS.sleep(1);
+        TimeUnit.SECONDS.sleep(getTimeOut());
     }
 
     public static String randomDnsSpoofingAddress() {
@@ -96,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
             if (backgroungThread == null) {
                 backgroungThread = new Thread(this);
                 TextView statusMessage = findViewById(R.id.timer);
-                statusMessage.setText("Dns Resolving Started...");
+                statusMessage.setText("Dns resolving with interval of " + getTimeOut() + " seconds started...");
                 backgroungThread.start();
             }
         }
