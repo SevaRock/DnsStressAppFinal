@@ -121,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
+                Log.e("DNS", "Dns Spam Stopped");
                 backgroungThread = null;
             }
         }
