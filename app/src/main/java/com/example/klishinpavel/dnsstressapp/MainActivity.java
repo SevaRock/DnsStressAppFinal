@@ -91,11 +91,11 @@ public class MainActivity extends AppCompatActivity {
     public class BackgroundDnsSpamProcess implements Runnable {
 
         Thread backgroungThread;
-        TextView statusMessage = findViewById(R.id.timer);
 
         public void start() {
             if (backgroungThread == null) {
                 backgroungThread = new Thread(this);
+                TextView statusMessage = findViewById(R.id.timer);
                 statusMessage.setText("Dns Resolving Started...");
                 backgroungThread.start();
             }
@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
         public void stop() {
             if (backgroungThread != null) {
+                TextView statusMessage = findViewById(R.id.timer);
                 statusMessage.setText("Dns Resolving Stopped...");
                 backgroungThread.interrupt();
             }
