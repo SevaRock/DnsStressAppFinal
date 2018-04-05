@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         return time;
     }
 
-    public void startRandomDnsSpoofing() throws IOException, InterruptedException {
+    public void startRandomDnsSpoofing() throws InterruptedException {
         isResolvable(randomDnsSpoofingAddress());
         TimeUnit.SECONDS.sleep(getTimeOut());
     }
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         return sb.toString() + ".dns.secure.mos";
     }
 
-    public void isResolvable(String hostname) throws InterruptedException {
+    public void isResolvable(String hostname) {
         try {
             InetAddress ip = InetAddress.getByName(hostname);
             L.info(hostname + " successfully resolved to " + ip.getHostAddress());
@@ -112,8 +112,6 @@ public class MainActivity extends AppCompatActivity {
                     startRandomDnsSpoofing();
                 }
             } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
                 e.printStackTrace();
             } finally {
                 Log.e("DNS", "Dns Spam Stopped");
