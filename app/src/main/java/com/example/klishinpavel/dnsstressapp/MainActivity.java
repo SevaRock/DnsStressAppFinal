@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     BackgroundDnsSpamProcess dnsSpamProcess = new BackgroundDnsSpamProcess();
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
         buttonStartDnsSpoofing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    dnsSpamProcess.start();
-                }
+                dnsSpamProcess.start();
+            }
         });
 
         buttonStopDnsSpoofing.setOnClickListener(new View.OnClickListener() {
@@ -53,9 +52,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public long getTimeOut() {
+        try {
         EditText timeoutField = findViewById(R.id.timeoutField);
-        int time = Integer.parseInt(timeoutField.getText().toString());
-        return time;
+            int time = Integer.parseInt(timeoutField.getText().toString());
+            return time;
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     public void startRandomDnsSpoofing() throws InterruptedException {
@@ -88,11 +92,18 @@ public class MainActivity extends AppCompatActivity {
         Thread backgroungThread;
 
         public void start() {
-            if (backgroungThread == null) {
-                backgroungThread = new Thread(this);
-                TextView statusMessage = findViewById(R.id.timer);
-                statusMessage.setText("Dns resolving with interval of " + getTimeOut() + " seconds started...");
-                backgroungThread.start();
+
+            TextView statusMessage = findViewById(R.id.timer);
+
+            if (getTimeOut() <= 0) {
+                statusMessage.setText("Wrong Timeout!");
+            } else {
+                if (backgroungThread == null) {
+                    backgroungThread = new Thread(this);
+
+                    statusMessage.setText("Dns resolving with interval of " + getTimeOut() + " seconds started...");
+                    backgroungThread.start();
+                }
             }
         }
 
