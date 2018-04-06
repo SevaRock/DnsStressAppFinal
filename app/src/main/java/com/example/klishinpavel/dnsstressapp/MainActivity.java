@@ -1,11 +1,14 @@
 package com.example.klishinpavel.dnsstressapp;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -34,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
 
         Button buttonStartDnsSpoofing = findViewById(R.id.buttonStart);
         Button buttonStopDnsSpoofing = findViewById(R.id.buttonStop);
-
 
         buttonStartDnsSpoofing.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +69,14 @@ public class MainActivity extends AppCompatActivity {
         TimeUnit.SECONDS.sleep(getTimeOut());
     }
 
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(
+                activity.getCurrentFocus().getWindowToken(), 0);
+    }
+
     public static String randomDnsSpoofingAddress() {
         char[] chars = "1234567890abcdefghijklmnopqrstuvwxyz".toCharArray();
         StringBuilder sb = new StringBuilder(8);
@@ -87,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     public class BackgroundDnsSpamProcess implements Runnable {
 
         Thread backgroungThread;
@@ -100,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 if (backgroungThread == null) {
                     backgroungThread = new Thread(this);
-
+                    hideKeyboard(MainActivity.this);
                     statusMessage.setText("Dns resolving with interval of " + getTimeOut() + " seconds started...");
                     backgroungThread.start();
                 }
