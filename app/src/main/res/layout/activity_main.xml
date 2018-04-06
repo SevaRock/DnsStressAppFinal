@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="#87CEEB"
     tools:context="com.example.klishinpavel.dnsstressapp.MainActivity"
     tools:layout_editor_absoluteY="81dp">
 
@@ -20,26 +20,31 @@
 
     <Button
         android:id="@+id/buttonStart"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="9dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_bg_round_start"
         android:text="Start Dns Stress"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.068"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timeoutField" />
 
     <Button
         android:id="@+id/buttonStop"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/button_bg_round_stop"
         android:text="Stop Dns Stress"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.931"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonStart" />
+        app:layout_constraintTop_toBottomOf="@+id/timeoutField" />
 
     <EditText
         android:id="@+id/timeoutField"
-        android:layout_width="284dp"
+        android:layout_width="340dp"
         android:layout_height="40dp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
