@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     protected static final Logger L = Logger.getLogger("dns_tests");
     StringBuilder log = new StringBuilder();
     BackgroundDnsSpamProcess dnsSpamProcess = new BackgroundDnsSpamProcess();
+    ReadLog readLog;
 
 
     @Override
@@ -112,6 +113,11 @@ public class MainActivity extends AppCompatActivity {
                 if (backgroungThread == null) {
                     backgroungThread = new Thread(this);
                     hideKeyboard(MainActivity.this);
+                    try {
+                        readLog.readToUi();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     statusMessage.setText("Dns resolving with interval of " + getTimeOut() + " seconds started...");
                     backgroungThread.start();
                 }
