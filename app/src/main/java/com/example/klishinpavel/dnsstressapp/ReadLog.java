@@ -22,7 +22,7 @@ public class ReadLog extends MainActivity {
             while ((line = bufferedReader.readLine()) != null) {
                 log.append(line);
             }
-            TextView statusMessage = findViewById(R.id.timer);
+            TextView statusMessage = findViewById(R.id.textView);
             statusMessage.setText(log.toString());
         } catch (IOException e) {
             // Handle Exception

@@ -13,7 +13,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Random;
@@ -104,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
         Thread backgroungThread;
 
         public void start() {
-
             TextView statusMessage = findViewById(R.id.timer);
 
             if (getTimeOut() <= 0) {
@@ -113,11 +114,6 @@ public class MainActivity extends AppCompatActivity {
                 if (backgroungThread == null) {
                     backgroungThread = new Thread(this);
                     hideKeyboard(MainActivity.this);
-                    try {
-                        readLog.readToUi();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
                     statusMessage.setText("Dns resolving with interval of " + getTimeOut() + " seconds started...");
                     backgroungThread.start();
                 }
