@@ -17,4 +17,10 @@ public class GeneralUiTest extends AbstractUiTest {
     public void intervalIndicationTest() {
         checkIntervalIndication(TIMEOUT_INTERVAL);
     }
+
+    @Test
+    public void stopIndicationTest() {
+        checkIntervalIndication(TIMEOUT_INTERVAL);
+        checkStopIndication();
+    }
 }

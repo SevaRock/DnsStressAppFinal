@@ -28,6 +28,7 @@ public class AbstractUiTest {
 
     ViewInteraction timeoutField = onView(withId(R.id.timeoutField));
     ViewInteraction startButton =  onView(withId(R.id.buttonStart));
+    ViewInteraction stopButton = onView(withId(R.id.buttonStop));
     ViewInteraction messageField = onView(withId(R.id.timer));
 
     @Before
@@ -56,5 +57,10 @@ public class AbstractUiTest {
         startButton.perform(click());
         messageField.check(matches(withText("Dns resolving with interval of "
                 + interval + " seconds started...")));
+    }
+
+    public void checkStopIndication() {
+        stopButton.perform(click());
+        messageField.check(matches(withText("Dns Resolving Stopped...")));
     }
 }
