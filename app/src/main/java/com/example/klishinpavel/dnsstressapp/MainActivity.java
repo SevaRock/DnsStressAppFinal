@@ -24,10 +24,7 @@ import java.util.logging.Logger;
 
 public class MainActivity extends AppCompatActivity {
     protected static final Logger L = Logger.getLogger("dns_tests");
-    StringBuilder log = new StringBuilder();
     BackgroundDnsSpamProcess dnsSpamProcess = new BackgroundDnsSpamProcess();
-    ReadLog readLog;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
