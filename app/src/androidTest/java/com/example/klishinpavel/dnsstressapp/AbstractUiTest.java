@@ -11,11 +11,15 @@ import android.support.test.uiautomator.Until;
 import org.junit.Before;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsNull.notNullValue;
 
-public class AbstractTest {
+public class AbstractUiTest {
 
     private static final int LAUNCH_TIMEOUT = 5000;
     private UiDevice mDevice;
@@ -45,5 +49,12 @@ public class AbstractTest {
         mDevice.wait(Until.hasObject(By.pkg(BASIC_SAMPLE_PACKAGE).depth(0)),
                 LAUNCH_TIMEOUT);
 
+    }
+
+    public void checkIntervalIndication(String interval) {
+        timeoutField.perform(typeText(interval));
+        startButton.perform(click());
+        messageField.check(matches(withText("Dns resolving with interval of "
+                + interval + " seconds started...")));
     }
 }
