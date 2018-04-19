@@ -11,16 +11,20 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 @RunWith(AndroidJUnit4.class)
 public class GeneralUiTest extends AbstractUiTest {
 
-    private final static String TIMEOUT_INTERVAL = "3";
+    //TODO: Make test parametrized
+
+    private final static String TIMEOUT_INTERVAL_SMALL = "3";
+    private final static String TIMEOUT_INTERVAL_MIDDLE = "10";
+    private final static String TIMEOUT_INTERVAL_LARGE = "30";
 
     @Test
-    public void intervalIndicationTest() {
-        checkIntervalIndication(TIMEOUT_INTERVAL);
-    }
+    public void simpleUiTest() {
+        checkIntervalIndication(TIMEOUT_INTERVAL_SMALL);
 
-    @Test
-    public void stopIndicationTest() {
-        checkIntervalIndication(TIMEOUT_INTERVAL);
+        checkIntervalIndication(TIMEOUT_INTERVAL_MIDDLE);
+
+        checkIntervalIndication(TIMEOUT_INTERVAL_LARGE);
+
         checkStopIndication();
     }
 }

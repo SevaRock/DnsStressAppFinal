@@ -11,6 +11,7 @@ import android.support.test.uiautomator.Until;
 import org.junit.Before;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -26,10 +27,10 @@ public class AbstractUiTest {
     private static final String BASIC_SAMPLE_PACKAGE
             = "com.example.klishinpavel.dnsstressapp";
 
-    ViewInteraction timeoutField = onView(withId(R.id.timeoutField));
-    ViewInteraction startButton =  onView(withId(R.id.buttonStart));
-    ViewInteraction stopButton = onView(withId(R.id.buttonStop));
-    ViewInteraction messageField = onView(withId(R.id.timer));
+    private ViewInteraction timeoutField = onView(withId(R.id.timeoutField));
+    private ViewInteraction startButton =  onView(withId(R.id.buttonStart));
+    private ViewInteraction stopButton = onView(withId(R.id.buttonStop));
+    private ViewInteraction messageField = onView(withId(R.id.timer));
 
     @Before
     public void startActivity() {
@@ -57,10 +58,12 @@ public class AbstractUiTest {
         startButton.perform(click());
         messageField.check(matches(withText("Dns resolving with interval of "
                 + interval + " seconds started...")));
+        stopButton.perform(click());
+        timeoutField.perform(clearText());
     }
 
     public void checkStopIndication() {
-        stopButton.perform(click());
+       // stopButton.perform(click());
         messageField.check(matches(withText("Dns Resolving Stopped...")));
     }
 }
