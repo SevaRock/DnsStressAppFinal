@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">DnsStressApp</string>
+    <string name="start_dns_stress">Start Dns Stress</string>
+    <string name="stop_dns_stress">Stop Dns Stress</string>
+    <string name="enter_timeout_in_seconds">enter timeout in seconds</string>
 </resources>
